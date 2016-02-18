@@ -1,3 +1,11 @@
+#### インストール  
+Download ZIPボタンを押してzipファイルをダウンロードします。  
+zipファイルの中にあるUnityInjectorフォルダを、CM3D2フォルダにコピーしてください。
+
+(releseの更新方法忘れたからとかなんとか）
+
++のダンスに対応したらしいよ
+
 # CM3D2.MirrorFloor.Plugin
 足下に鏡の床を追加します。
 

@@ -9,7 +9,7 @@ namespace CM3D2.MirrorFloor.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("Mirror Floor"),
-    PluginVersion("1.0.0.0")]
+    PluginVersion("1.0.0.2")]
     public class MirrorFloor : PluginBase
     {
         private enum TargetLevel
@@ -24,7 +24,10 @@ namespace CM3D2.MirrorFloor.Plugin
             SceneDance_ETYL = 20,
 
             // ダンス:scarlet leap
-            SceneDance_SCLP = 22
+            SceneDance_SCLP = 22,
+
+            // ダンス:stellar my tears
+            SceneDance_STMT = 26
         }
 
         private GameObject mirror;
@@ -37,6 +40,7 @@ namespace CM3D2.MirrorFloor.Plugin
             if(  level == (int)TargetLevel.SceneDance_DDFL
               || level == (int)TargetLevel.SceneDance_ETYL
               || level == (int)TargetLevel.SceneDance_SCLP
+              || level == (int)TargetLevel.SceneDance_STMT
             )
             {
                 return (true);
@@ -135,9 +139,11 @@ namespace CM3D2.MirrorFloor.Plugin
             if (Input.GetKeyDown(KeyCode.N))
             {
                 mirror.renderer.enabled = !mirror.renderer.enabled;
-                mirror2.renderer.enabled = !mirror2.renderer.enabled;
-                mirror3.renderer.enabled = !mirror3.renderer.enabled;
-                mirror4.renderer.enabled = !mirror4.renderer.enabled;
+                if(isDanceScene(Application.loadedLevel)){
+                    mirror2.renderer.enabled = !mirror2.renderer.enabled;
+                    mirror3.renderer.enabled = !mirror3.renderer.enabled;
+                    mirror4.renderer.enabled = !mirror4.renderer.enabled;
+                }
             }
 
             //if (Input.GetKey(KeyCode.Keypad4))
