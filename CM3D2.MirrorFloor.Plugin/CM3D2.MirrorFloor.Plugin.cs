@@ -9,7 +9,7 @@ namespace CM3D2.MirrorFloor.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("Mirror Floor"),
-    PluginVersion("1.0.0.2")]
+    PluginVersion("1.0.0.3")]
     public class MirrorFloor : PluginBase
     {
         private enum TargetLevel
@@ -27,20 +27,20 @@ namespace CM3D2.MirrorFloor.Plugin
             SceneDance_SCLP = 22,
 
             // ダンス:stellar my tears
-            SceneDance_STMT = 26
+            SceneDance_STMT = 26,
+
+            // ダンス:
+            SceneDance_RYFU = 28
         }
 
         private GameObject mirror;
-        private GameObject mirror2;
-        private GameObject mirror3;
-        private GameObject mirror4;
-        // private float speed = 0.01f;
 
         private bool isDanceScene(int level){
             if(  level == (int)TargetLevel.SceneDance_DDFL
               || level == (int)TargetLevel.SceneDance_ETYL
               || level == (int)TargetLevel.SceneDance_SCLP
               || level == (int)TargetLevel.SceneDance_STMT
+              || level == (int)TargetLevel.SceneDance_RYFU
             )
             {
                 return (true);
@@ -63,10 +63,16 @@ namespace CM3D2.MirrorFloor.Plugin
                 Material mirrorMaterial = new Material(Shader.Find("Mirror"));
 
                 mirror = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                // もっとスマートに書きたいけど今はべたうち
                 if(isDanceScene(level))
                 {
-                    mirror.transform.localScale = new Vector3(0.6f, 1f, 0.5f);
+                    if(  level == (int)TargetLevel.SceneDance_DDFL){
+                        mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
+                        mirror.transform.localPosition = new Vector3(0f, -0.02f, 0f);
+                    }
+                    else{
+                        mirror.transform.localScale = new Vector3(0.55f, 1f, 0.5f);
+                        mirror.transform.localPosition = new Vector3(0f, -0.03f, 0.3f);
+                    }
                 }
                 else
                 {
@@ -84,45 +90,6 @@ namespace CM3D2.MirrorFloor.Plugin
 
                 if(isDanceScene(level)){
 
-                    // ２枚目書いてみゆ
-                    mirror2 = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                    mirror2.transform.localScale = new Vector3(0.6f, 1f, 0.5f);
-                    mirror2.transform.localPosition = new Vector3(-2.5f, 0f, 0f);
-                    mirror2.transform.localEulerAngles = new Vector3(0,0,-90);
-                    mirror2.renderer.material = mirrorMaterial;
-                    //mirror2.layer = 4;
-                    mirror2.AddComponent<MirrorReflection2>();
-                    MirrorReflection2 mirrorRefleftion2_2 = mirror.GetComponent<MirrorReflection2>();
-                    mirrorRefleftion2_2.m_TextureSize = 2048;
-                    mirrorRefleftion2_2.m_ClipPlaneOffset = 0f;
-                    mirror2.renderer.enabled = false;
-                    //mirror2.renderer.enabled = true;
-                // ３枚目
-                    mirror3 = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                    mirror3.transform.localScale = new Vector3(0.6f, 1f, 0.5f);
-                    mirror3.transform.localPosition = new Vector3(2.5f, 0f, 0f);
-                    mirror3.transform.localEulerAngles = new Vector3(0,0,90);
-                    mirror3.renderer.material = mirrorMaterial;
-                    //mirror3.layer = 4;
-                    mirror3.AddComponent<MirrorReflection2>();
-                    MirrorReflection2 mirrorRefleftion2_3 = mirror.GetComponent<MirrorReflection2>();
-                    mirrorRefleftion2_3.m_TextureSize = 2048;
-                    mirrorRefleftion2_3.m_ClipPlaneOffset = 0f;
-                    mirror3.renderer.enabled = false;
-                    //mirror3.renderer.enabled = true;
-                // ４枚目
-                    mirror4 = GameObject.CreatePrimitive(PrimitiveType.Plane);
-                    mirror4.transform.localScale = new Vector3(0.6f, 1f, 0.5f);
-                    mirror4.transform.localPosition = new Vector3(0f, 2.8f, 0f);
-                    mirror4.transform.localEulerAngles = new Vector3(180,0,0);
-                    mirror4.renderer.material = mirrorMaterial;
-                    //mirror4.layer = 4;
-                    mirror4.AddComponent<MirrorReflection2>();
-                    MirrorReflection2 mirrorRefleftion2_4 = mirror.GetComponent<MirrorReflection2>();
-                    mirrorRefleftion2_4.m_TextureSize = 2048;
-                    mirrorRefleftion2_4.m_ClipPlaneOffset = 0f;
-                    mirror4.renderer.enabled = false;
-                    //mirror4.renderer.enabled = true;
 
                 }
 
@@ -139,39 +106,8 @@ namespace CM3D2.MirrorFloor.Plugin
             if (Input.GetKeyDown(KeyCode.N))
             {
                 mirror.renderer.enabled = !mirror.renderer.enabled;
-                if(isDanceScene(Application.loadedLevel)){
-                    mirror2.renderer.enabled = !mirror2.renderer.enabled;
-                    mirror3.renderer.enabled = !mirror3.renderer.enabled;
-                    mirror4.renderer.enabled = !mirror4.renderer.enabled;
-                }
             }
 
-            //if (Input.GetKey(KeyCode.Keypad4))
-            //{
-            //    mirror.transform.localScale -= Vector3.right * Time.deltaTime * speed;
-            //}
-            //if (Input.GetKey(KeyCode.Keypad6))
-            //{
-            //    mirror.transform.localScale += Vector3.right * Time.deltaTime * speed;
-            //}
-            //if (Input.GetKey(KeyCode.Keypad2))
-            //{
-            //    mirror.transform.localScale -= Vector3.forward * Time.deltaTime * speed;
-            //}
-            //if (Input.GetKey(KeyCode.Keypad8))
-            //{
-            //    mirror.transform.localScale += Vector3.forward * Time.deltaTime * speed;
-            //}
-            //if (Input.GetKey(KeyCode.Keypad3))
-            //{
-            //    mirror.transform.position -= Vector3.up * Time.deltaTime * speed;
-            //    Console.WriteLine(mirror.transform.position.ToString("F4"));
-            //}
-            //if (Input.GetKey(KeyCode.Keypad9))
-            //{
-            //    mirror.transform.position += Vector3.up * Time.deltaTime * speed;
-            //    Console.WriteLine(mirror.transform.position.ToString("F4"));
-            //}
         }
     }
 }
