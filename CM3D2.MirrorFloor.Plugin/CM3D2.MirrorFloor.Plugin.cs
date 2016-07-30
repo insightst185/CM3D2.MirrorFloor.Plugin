@@ -9,7 +9,7 @@ namespace CM3D2.MirrorFloor.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("Mirror Floor"),
-    PluginVersion("1.0.0.3")]
+    PluginVersion("1.0.0.4")]
     public class MirrorFloor : PluginBase
     {
         private enum TargetLevel
@@ -30,7 +30,10 @@ namespace CM3D2.MirrorFloor.Plugin
             SceneDance_STMT = 26,
 
             // ダンス:
-            SceneDance_RYFU = 28
+            SceneDance_RYFU = 28,
+
+            // ダンス:
+            SceneDance_HAPY = 30
         }
 
         private GameObject mirror;
@@ -41,6 +44,7 @@ namespace CM3D2.MirrorFloor.Plugin
               || level == (int)TargetLevel.SceneDance_SCLP
               || level == (int)TargetLevel.SceneDance_STMT
               || level == (int)TargetLevel.SceneDance_RYFU
+              || level == (int)TargetLevel.SceneDance_HAPY
             )
             {
                 return (true);
@@ -68,6 +72,10 @@ namespace CM3D2.MirrorFloor.Plugin
                     if(  level == (int)TargetLevel.SceneDance_DDFL){
                         mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
                         mirror.transform.localPosition = new Vector3(0f, -0.02f, 0f);
+                    }
+                    else if(  level == (int)TargetLevel.SceneDance_HAPY){
+                        mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
+                        mirror.transform.localPosition = new Vector3(0f, -0.012f, 0f);
                     }
                     else{
                         mirror.transform.localScale = new Vector3(0.55f, 1f, 0.5f);
