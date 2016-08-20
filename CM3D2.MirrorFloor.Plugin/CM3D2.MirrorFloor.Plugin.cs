@@ -9,7 +9,7 @@ namespace CM3D2.MirrorFloor.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("Mirror Floor"),
-    PluginVersion("1.0.0.4")]
+    PluginVersion("1.0.0.5")]
     public class MirrorFloor : PluginBase
     {
         private enum TargetLevel
@@ -33,7 +33,14 @@ namespace CM3D2.MirrorFloor.Plugin
             SceneDance_RYFU = 28,
 
             // ダンス:
-            SceneDance_HAPY = 30
+            SceneDance_HAPY = 30,
+
+            // ダンス6:happy!happy!スキャンダル 豪華版
+            SceneDance_HAPYDX = 31,
+
+            // ダンス7:Can Know Two Close
+            SceneDance_CKTC = 32
+
         }
 
         private GameObject mirror;
@@ -45,6 +52,8 @@ namespace CM3D2.MirrorFloor.Plugin
               || level == (int)TargetLevel.SceneDance_STMT
               || level == (int)TargetLevel.SceneDance_RYFU
               || level == (int)TargetLevel.SceneDance_HAPY
+              || level == (int)TargetLevel.SceneDance_HAPYDX
+              || level == (int)TargetLevel.SceneDance_CKTC
             )
             {
                 return (true);
@@ -73,10 +82,15 @@ namespace CM3D2.MirrorFloor.Plugin
                         mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
                         mirror.transform.localPosition = new Vector3(0f, -0.02f, 0f);
                     }
-                    else if(  level == (int)TargetLevel.SceneDance_HAPY){
+                    else if(  level == (int)TargetLevel.SceneDance_HAPY ||
+                              level == (int)TargetLevel.SceneDance_HAPYDX){
                         mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
                         mirror.transform.localPosition = new Vector3(0f, -0.012f, 0f);
                     }
+//                    else if(  level == (int)TargetLevel.SceneDance_HAPYDX){
+//                        mirror.transform.localScale = new Vector3(0.85f, 1f, 0.85f);
+//                        mirror.transform.localPosition = new Vector3(0f, -0.01357f, 0f);
+//                    }
                     else{
                         mirror.transform.localScale = new Vector3(0.55f, 1f, 0.5f);
                         mirror.transform.localPosition = new Vector3(0f, -0.03f, 0.3f);
