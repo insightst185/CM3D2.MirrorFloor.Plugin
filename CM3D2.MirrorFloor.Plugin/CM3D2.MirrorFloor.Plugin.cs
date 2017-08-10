@@ -9,7 +9,7 @@ namespace CM3D2.MirrorFloor.Plugin
     PluginFilter("CM3D2x86"),
     PluginFilter("CM3D2VRx64"),
     PluginName("Mirror Floor"),
-    PluginVersion("1.0.0.5")]
+    PluginVersion("1.0.0.6")]
     public class MirrorFloor : PluginBase
     {
         private enum TargetLevel
@@ -44,6 +44,7 @@ namespace CM3D2.MirrorFloor.Plugin
         }
 
         private GameObject mirror;
+        private int level;
 
         private bool isDanceScene(int level){
             if(  level == (int)TargetLevel.SceneDance_DDFL
@@ -71,10 +72,10 @@ namespace CM3D2.MirrorFloor.Plugin
 
         private void OnLevelWasLoaded(int level)
         {
+            this.level = level;
             if (Enum.IsDefined(typeof(TargetLevel), level))
             {
                 Material mirrorMaterial = new Material(Shader.Find("Mirror"));
-
                 mirror = GameObject.CreatePrimitive(PrimitiveType.Plane);
                 if(isDanceScene(level))
                 {
@@ -101,14 +102,13 @@ namespace CM3D2.MirrorFloor.Plugin
                     mirror.transform.localScale = new Vector3(0.3f, 1f, 0.3f);
                 }
 
-                mirror.renderer.material = mirrorMaterial;
+                mirror.GetComponent<Renderer>().material = mirrorMaterial;
                 //mirror.layer = 4;
                 mirror.AddComponent<MirrorReflection2>();
                 MirrorReflection2 mirrorRefleftion2 = mirror.GetComponent<MirrorReflection2>();
                 mirrorRefleftion2.m_TextureSize = 2048;
-                mirrorRefleftion2.m_ClipPlaneOffset = 0f;
-                mirror.renderer.enabled = false;
-                //mirror.renderer.enabled = true;
+                mirrorRefleftion2.m_ClipPlaneOffset = 0.5f;
+                mirror.GetComponent<Renderer>().enabled = false;
 
                 if(isDanceScene(level)){
 
@@ -120,14 +120,14 @@ namespace CM3D2.MirrorFloor.Plugin
 
         private void Update()
         {
-            if (!Enum.IsDefined(typeof(TargetLevel), Application.loadedLevel))
+            if (!Enum.IsDefined(typeof(TargetLevel), level))
             {
                 return;
             }
 
             if (Input.GetKeyDown(KeyCode.N))
             {
-                mirror.renderer.enabled = !mirror.renderer.enabled;
+                mirror.GetComponent<Renderer>().enabled = !mirror.GetComponent<Renderer>().enabled;
             }
 
         }
